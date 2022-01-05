@@ -1,0 +1,24 @@
+<script>
+	//Estrutura: nomeusuario@provedor.com
+	emailSintaxValidator() {
+		let email = document.getElementById('email').value
+		if (!email.includes('@') || !email.incldes('.com')) {
+			return false
+		} else {
+			let array_email = email.split('@')
+			if (array_email[0] == '') {
+				return false
+			}
+			if (array_email.length > 2) {
+				return false
+			}
+		}
+
+	}
+	
+</script>
+
+<form href="/">
+	<input id="email" name="email">
+	<input type="submit">
+</form>
