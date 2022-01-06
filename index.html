@@ -59,16 +59,19 @@
 
 	function verifyEmail () {
 		if (emailSintaxValidator()) {
-			alert('Valid email')
+			document.getElementsByClassName('result-valid')[0].style.display = 'block'
+			document.getElementsByClassName('result-invalid')[0].style.display = 'none'
 		} else {
-			alert('Invalid email')
+			document.getElementsByClassName('result-invalid')[0].style.display = 'block'
+			document.getElementsByClassName('result-valid')[0].style.display = 'none'
 		}
 	}
 </script>
 
 <link rel="stylesheet" href="./css/style.css"/>
 <div class="container">
-	<div class="result"></div>
+	<div class="display-none result-valid">Valid email</div>
+	<div class="display-none result-invalid">Invalid email</div>
 	<input type="text" id="email" name="email">
-	<button onclick="verifyEmail()">Verificar</button>
+	<button onclick="verifyEmail()">Verify</button>
 </div>

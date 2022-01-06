@@ -8,6 +8,7 @@ body {
 	display: flex;
 	align-items: center;
 	background-color: orange;
+	font-family: Arial;
 }
 
 .container {
@@ -32,9 +33,29 @@ input {
 button {
 	background-color: orange;
 	border: none;
-	padding: 10px 20px;
+	padding: 10px 40px;
 	color: white;
 	font-weight: bold;
 	font-size: 1.1em;
 	cursor: pointer;
 }
+
+.result-valid, .result-invalid {
+	width: 10vw;
+	padding: 5px;
+	background-color: #bfe3b4;
+	color: black;
+	text-align: center;
+	font-size: 1.05em;
+	border-radius: 2px;
+}
+
+.result-invalid {
+	background-color: #FF272A;
+	color: white;
+}
+
+.display-none {
+	display: none;
+}
+
