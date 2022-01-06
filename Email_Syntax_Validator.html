@@ -5,7 +5,7 @@
 	function invalidChars(string, verify_provider = false) {
 		let i = 0
 		for (i = 0; i < string.length; i++) {
-			let char_ascii = string[i].char.charCodeAt(0)
+			let char_ascii = string[i].charCodeAt(0)
 			//Para o caso da verificação do nome do provedor, o hífen e o ponto serão permitidos dentre os caracteres especiais
 			if (string[i] == '-' && verify_provider == true || string[i] == '.' && verify_provider == true) {
 				continue
@@ -20,7 +20,7 @@
 	function emailSintaxValidator() {
 		let email = document.getElementById('email').value
 		//Não pode começar com números
-		if (isNaN(email[0])) {
+		if (!isNaN(email[0])) {
 			return false
 		}
 		//Não deve conter dois pontos seguidos um do outro
@@ -28,7 +28,7 @@
 			return false
 		}
 		//Deve conter um '@' e um '.com'
-		if (!email.includes('@') || !email.incldes('.com')) {
+		if (!email.includes('@') || !email.includes('.com')) {
 			return false
 		} else {
 			let array_email = email.split('@')
@@ -44,13 +44,13 @@
 				return false
 			}
 			//O nome do provedor só pode apresentar o hífen e o ponto dentre os caractere especiais, como definido pela função
-			let provider = array_email[i].split('.com')[0]
+			let provider = array_email[1].split('.com')[0]
 			if (invalidChars(provider, true)) {
 				return false
 			}
 			//O domínio .com deve constituir os últimos caracteres do email
 			array_email = email.split('.com')
-			if (array_email[array_email.length - 1] == '') {
+			if (array_email[array_email.length - 1] != '') {
 				return false
 			}
 		}
@@ -58,17 +58,19 @@
 	}
 
 	function verifyEmail () {
+		function stopDefault(event) {
+			event.preventDefault()
+		}
+		document.getElementById('input').addEventListener('click', stopDefault, false)
 		if (emailSintaxValidator()) {
 			alert('Valid email')
 		} else {
-			emailSintaxValidator() {
-				alert('Invalid email')
-			}
+			alert('Invalid email')
 		}
 	}
 </script>
 
-<form>
+<div>
 	<input id="email" name="email">
 	<input id="input" type="submit" onclick="verifyEmail()">
-</form>
+</div>
