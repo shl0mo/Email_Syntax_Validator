@@ -1,9 +1,13 @@
 <script>
-	//Sintaxe permitida: nomeusuario@provedor.com
+	//Sintaxe permitida: nomeusuario@provedor.dominio
 
-	//Retorna true se exisitir caracteres inválidos. A variável verify_server define se deve-se verificar os caracteres para o provedor (sendo true, nesse caso) ou se deve-se verificar o nomeusuaio (devendo ser setada para false, nesse caso)
-	let domains = []
+	//Dentro do aarray domains de objDomains devem ser listados todos os domínios permitidos, os quais serão considerados válidos
+	let objDomains = {
+		domains: ['.com', '.br', '.edu', '.org']
+	}
 
+		
+	//invalidChars retorna true se exisitir caracteres inválidos. A variável verify_server define se deve-se verificar os caracteres para o provedor (sendo true, nesse caso) ou se deve-se verificar o nomeusuaio (devendo ser setada para false, nesse caso)
 	function invalidChars(string, verify_provider = false) {
 		let i = 0
 		for (i = 0; i < string.length; i++) {
@@ -33,32 +37,53 @@
 		if (email.includes('..')) {
 			return false
 		}
-		//Deve conter um '@' e um '.com'
-		if (!email.includes('@') || !email.includes('.com')) {
+		//Deve conter um '@'
+		if (!email.includes('@')) {
 			return false
-		} else {
-			let array_email = email.split('@')
-			if (array_email.length > 2) {
-				return false
+		}
+		//O domínio é o último elemento depois do último ponto
+		let array_email = email.split('.')
+		let domain = '.' +  array_email[array_email.length - 1]
+		//O domínio deve ser um dos listados
+		let i = 0
+		let one_equal = false
+		for (i = 0; i < objDomains.domains.length; i++) {
+			if (domain == objDomains.domains[i]) {
+				one_equal = true
 			}
-			let username = array_email[0]
-			if (username == '' || array_email[1] == '') {
-				return false
-			}
-			//O nomeusuario não deve apresentar caracteres inválidos
-			if (invalidChars(username)) {
-				return false
-			}
-			//O nome do provedor só pode apresentar o hífen e o ponto dentre os caractere especiais, como definido pela função
-			let provider = array_email[1].split('.com')[0]
-			if (invalidChars(provider, true)) {
-				return false
-			}
-			//O domínio .com deve constituir os últimos caracteres do email
-			array_email = email.split('.com')
-			if (array_email[array_email.length - 1] != '') {
-				return false
-			}
+		}
+		if (!one_equal) {
+			return false
+		}
+		array_email = email.split('@')
+		if (array_email.length > 2) {
+			return false
+		}
+		let username = array_email[0]
+		if (username == '' || array_email[1] == '') {
+			return false
+		}
+		//O nomeusuario não deve apresentar caracteres inválidos
+		if (invalidChars(username)) {
+			return false
+		}
+		//O nome do provedor só pode apresentar o hífen e o ponto dentre os caractere especiais, como definido pela função
+		let provider = array_email[1].split(domain)[0]
+		if (invalidChars(provider, true)) {
+			return false
+		}
+		//O nome do provedor não pode começar com nenhum dos dois caracteres especiais permitidos para o nome do provedor
+		if (provider[0] == '.' || provider[0] == '-') {
+			return false
+		}
+		//O nome do provedor não deve conter hífen seguido de ponto (.-) ou ponto seguido de hífen (-.)
+		if (provider.includes('.-') || provider.includes('-.')) {
+			return false
+		}
+		//O domínio .com deve constituir os últimos caracteres do email
+		array_email = email.split(domain)
+		if (array_email[array_email.length - 1] != '') {
+			return false
 		}
 		return true
 	}
