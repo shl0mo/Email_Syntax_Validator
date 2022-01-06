@@ -6,8 +6,12 @@
 		let i = 0
 		for (i = 0; i < string.length; i++) {
 			let char_ascii = string[i].charCodeAt(0)
+			//Para o nome do usuário, apenas o ponto é permitido dos caracteres especiais
+			if (string[i] == '.') {
+				continue
+			}
 			//Para o caso da verificação do nome do provedor, o hífen e o ponto serão permitidos dentre os caracteres especiais
-			if (string[i] == '-' && verify_provider == true || string[i] == '.' && verify_provider == true) {
+			if (string[i] == '-' && verify_provider == true) {
 				continue
 			}
 			if (char_ascii < 48 || (char_ascii >= 58 && char_ascii <= 64) || (char_ascii >= 91 && char_ascii <= 96) || char_ascii > 123) {
