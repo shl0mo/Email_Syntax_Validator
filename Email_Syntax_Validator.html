@@ -1,16 +1,28 @@
 <script>
-	//Estrutura: nomeusuario@provedor.com
+	//Sintaxe permitida: nomeusuario@provedor.com
 	emailSintaxValidator() {
 		let email = document.getElementById('email').value
+		//Não pode começar com números
+		if (isNaN(email[0])) {
+			return false
+		}
+		//Deve conter um '@' e um '.com'
 		if (!email.includes('@') || !email.incldes('.com')) {
 			return false
 		} else {
 			let array_email = email.split('@')
-			if (array_email[0] == '') {
-				return false
-			}
 			if (array_email.length > 2) {
 				return false
+			}
+			if (array_email[0] == '' || array_email[1] == '') {
+				return false
+			}
+			let i = 0
+			for (i = 0; i < array_email[0].length; i++) {
+				let char_ascii = array_email[0][i].char.charCodeAt(0)
+				if (char_ascii < 48 || (char_ascii >= 58 && char_ascii <= 64) || (char_ascii >= 91 && char_ascii <= 96) || char_ascii > 123) {
+					return false
+				}
 			}
 		}
 
