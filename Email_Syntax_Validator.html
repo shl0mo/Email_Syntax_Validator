@@ -6,7 +6,8 @@
 		let i = 0
 		for (i = 0; i < string.length; i++) {
 			let char_ascii = string[i].char.charCodeAt(0)
-			if (string[i] == '-' && verify_provider == true) {
+			//Para o caso da verificação do nome do provedor, o hífen e o ponto serão permitidos dentre os caracteres especiais
+			if (string[i] == '-' && verify_provider == true || string[i] == '.' && verify_provider == true) {
 				continue
 			}
 			if (char_ascii < 48 || (char_ascii >= 58 && char_ascii <= 64) || (char_ascii >= 91 && char_ascii <= 96) || char_ascii > 123) {
@@ -16,11 +17,14 @@
 		return false
 	}
 
-
 	function emailSintaxValidator() {
 		let email = document.getElementById('email').value
 		//Não pode começar com números
 		if (isNaN(email[0])) {
+			return false
+		}
+		//Não deve conter dois pontos seguidos um do outro
+		if (email.includes('..')) {
 			return false
 		}
 		//Deve conter um '@' e um '.com'
@@ -31,18 +35,40 @@
 			if (array_email.length > 2) {
 				return false
 			}
-			if (array_email[0] == '' || array_email[1] == '') {
+			let username = array_email[0]
+			if (username == '' || array_email[1] == '') {
 				return false
 			}
 			//O nomeusuario não deve apresentar caracteres inválidos
-			
+			if (invalidChars(username)) {
+				return false
+			}
+			//O nome do provedor só pode apresentar o hífen e o ponto dentre os caractere especiais, como definido pela função
+			let provider = array_email[i].split('.com')[0]
+			if (invalidChars(provider, true)) {
+				return false
+			}
+			//O domínio .com deve constituir os últimos caracteres do email
+			array_email = email.split('.com')
+			if (array_email[array_email.length - 1] == '') {
+				return false
+			}
 		}
-
+		return true
 	}
-	
+
+	function verifyEmail () {
+		if (emailSintaxValidator()) {
+			alert('Valid email')
+		} else {
+			emailSintaxValidator() {
+				alert('Invalid email')
+			}
+		}
+	}
 </script>
 
-<form href="/">
+<form>
 	<input id="email" name="email">
-	<input type="submit">
+	<input id="input" type="submit" onclick="verifyEmail()">
 </form>
