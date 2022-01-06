@@ -2,6 +2,8 @@
 	//Sintaxe permitida: nomeusuario@provedor.com
 
 	//Retorna true se exisitir caracteres inválidos. A variável verify_server define se deve-se verificar os caracteres para o provedor (sendo true, nesse caso) ou se deve-se verificar o nomeusuaio (devendo ser setada para false, nesse caso)
+	let domains = []
+
 	function invalidChars(string, verify_provider = false) {
 		let i = 0
 		for (i = 0; i < string.length; i++) {
