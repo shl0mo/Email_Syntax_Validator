@@ -61,8 +61,11 @@
 		return true
 	}
 
+	
 	function verifyEmail () {
-		if (emailSintaxValidator()) {
+		if (document.getElementById('email').value == '') {
+			alert('Missing email')
+		} else if (emailSintaxValidator()) {
 			document.getElementsByClassName('result-valid')[0].style.display = 'block'
 			document.getElementsByClassName('result-invalid')[0].style.display = 'none'
 		} else {
@@ -70,6 +73,18 @@
 			document.getElementsByClassName('result-valid')[0].style.display = 'none'
 		}
 	}
+
+	let interval = setInterval(() => {
+		if (document.contains(document.getElementById('email'))) {
+			if (document.getElementById('email').value == '') {
+				document.getElementsByClassName('result-valid')[0].style.display = 'none'
+				document.getElementsByClassName('result-invalid')[0].style.display = 'none'
+			}
+		}
+	}, 50)
+
+	interval
+	
 </script>
 
 <link rel="stylesheet" href="./css/style.css"/>
